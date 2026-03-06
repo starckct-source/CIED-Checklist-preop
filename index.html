@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIED Präoperative Checkliste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f2744;
+  --navy-mid: #1a3a5c;
+  --navy-light: #234b75;
+  --blue: #2563a8;
+  --blue-bright: #3b82f6;
+  --sky: #e8f0fb;
+  --sky-dark: #cdddf5;
+  --white: #ffffff;
+  --off-white: #f7f9fc;
+  --gray-100: #eef1f6;
+  --gray-300: #c8d0dd;
+  --gray-500: #7a8899;
+  --gray-700: #3d4a5c;
+  --text: #1a2535;
+  --amber: #d97706;
+  --amber-light: #fef3c7;
+  --amber-border: #fbbf24;
+  --red: #b91c1c;
+  --red-light: #fef2f2;
+  --red-border: #fca5a5;
+  --green: #15803d;
+  --green-light: #f0fdf4;
+  --green-border: #86efac;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(15,39,68,0.08), 0 4px 16px rgba(15,39,68,0.06);
+  --shadow-lg: 0 8px 32px rgba(15,39,68,0.12), 0 2px 8px rgba(15,39,68,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.app-header {
+  background: var(--navy);
+  color: white;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.header-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 16px 20px 12px;
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.header-logo {
+  width: 36px; height: 36px;
+  background: var(--blue-bright);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.header-title h1 {
+  font-size: 16px; font-weight: 700; letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.header-title p {
+  font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 1px;
+  font-weight: 400; letter-spacing: 0.02em; text-transform: uppercase;
+}
+.reset-btn {
+  margin-left: auto;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.8);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.reset-btn:hover { background: rgba(255,255,255,0.18); color: white; }
+
+/* Progress bar */
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.1);
+  border-radius: 100px;
+  height: 5px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-bright), #60a5fa);
+  border-radius: 100px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+}
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: rgba(255,255,255,0.5);
+  margin-bottom: 5px;
+}
+.progress-label strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+/* ── MAIN ── */
+.main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+/* ── SECTION NAV PILLS ── */
+.section-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.nav-pill {
+  padding: 5px 11px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--white);
+  border: 1.5px solid var(--gray-300);
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.nav-pill:hover { border-color: var(--blue); color: var(--blue); }
+.nav-pill.active { background: var(--navy); border-color: var(--navy); color: white; }
+.nav-pill.done { background: var(--green-light); border-color: var(--green-border); color: var(--green); }
+
+/* ── SECTION CARD ── */
+.section-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+  transition: border-color 0.2s;
+}
+.section-card.active { border-color: var(--blue-bright); }
+.section-card.complete { border-color: var(--green-border); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.section-header:hover { background: var(--off-white); }
+
+.section-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--sky);
+  color: var(--blue);
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.section-card.complete .section-num {
+  background: var(--green-light);
+  color: var(--green);
+}
+.section-card.active .section-num {
+  background: var(--blue);
+  color: white;
+}
+
+.section-title-wrap { flex: 1; min-width: 0; }
+.section-title {
+  font-size: 14px; font-weight: 600;
+  color: var(--navy); line-height: 1.3;
+}
+.section-subtitle {
+  font-size: 11px; color: var(--gray-500); margin-top: 1px;
+}
+
+.section-status {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+.section-count {
+  font-size: 12px; color: var(--gray-500);
+  font-family: 'DM Mono', monospace;
+}
+.section-count.done { color: var(--green); }
+.chevron {
+  font-size: 16px; color: var(--gray-300);
+  transition: transform 0.25s;
+}
+.section-card.open .chevron { transform: rotate(180deg); }
+
+.section-body {
+  display: none;
+  border-top: 1px solid var(--gray-100);
+}
+.section-card.open .section-body { display: block; }
+
+/* ── CHECK ITEMS ── */
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  transition: background 0.12s;
+  cursor: pointer;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: var(--off-white); }
+.check-item.checked { background: var(--green-light); }
+.check-item.warning { background: var(--amber-light); border-left: 3px solid var(--amber-border); }
+.check-item.warning.checked { background: #d1fae5; }
+.check-item.critical { background: var(--red-light); border-left: 3px solid var(--red-border); }
+.check-item.critical.checked { background: var(--green-light); }
+
+.checkbox {
+  width: 22px; height: 22px;
+  border: 2px solid var(--gray-300);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.15s;
+  background: white;
+}
+.check-item.checked .checkbox {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+.checkbox-check { font-size: 13px; display: none; }
+.check-item.checked .checkbox-check { display: block; }
+
+.check-content { flex: 1; min-width: 0; }
+.check-label {
+  font-size: 14px; font-weight: 500;
+  color: var(--text); line-height: 1.4;
+  display: flex; align-items: flex-start; gap: 6px;
+}
+.check-item.checked .check-label { color: var(--gray-500); text-decoration: line-through; }
+.required-star { color: var(--red); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.check-note {
+  font-size: 12px; color: var(--gray-500);
+  margin-top: 2px; font-style: italic;
+}
+
+/* Info button */
+.info-btn {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sky-dark);
+  background: var(--sky);
+  color: var(--blue);
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.info-btn:hover { background: var(--blue); color: white; border-color: var(--blue); }
+
+/* ── ALERT ROWS ── */
+.alert-row {
+  display: flex; gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  align-items: flex-start;
+}
+.alert-row.warning { background: var(--amber-light); }
+.alert-row.danger { background: var(--red-light); }
+.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.alert-text { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+
+/* ── SECTION BADGE (conditional) ── */
+.conditional-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--navy);
+  color: white;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 100px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-left: 6px;
+}
+
+/* ── MODAL / DRAWER ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,20,40,0.5);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: white;
+  border-radius: var(--radius) var(--radius) 12px 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-header {
+  background: var(--navy);
+  color: white;
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.modal-title { font-size: 14px; font-weight: 600; }
+.modal-close {
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.15);
+  border: none; border-radius: 6px;
+  color: white; font-size: 16px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.25); }
+.modal-body {
+  padding: 20px;
+  font-size: 14px; line-height: 1.7; color: var(--gray-700);
+}
+.modal-body h4 {
+  font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--blue); margin: 16px 0 6px;
+}
+.modal-body h4:first-child { margin-top: 0; }
+.modal-body p { margin-bottom: 10px; }
+.modal-body ul { padding-left: 18px; }
+.modal-body ul li { margin-bottom: 4px; }
+.modal-body .highlight-box {
+  background: var(--amber-light);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.modal-body .ref-box {
+  background: var(--sky);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+/* ── SUMMARY PAGE ── */
+.summary-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1.5px solid var(--green-border);
+}
+.summary-header {
+  background: var(--navy);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.summary-header h2 { font-size: 20px; font-weight: 700; }
+.summary-header p { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+.summary-body { padding: 20px; }
+.summary-row {
+  display: flex; align-items: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  gap: 10px;
+}
+.summary-row.ok { background: var(--green-light); color: var(--green); }
+.summary-row.warn { background: var(--amber-light); color: var(--amber); }
+.summary-row.incomplete { background: var(--red-light); color: var(--red); }
+.summary-row-icon { font-size: 16px; flex-shrink: 0; }
+.summary-row-text { flex: 1; font-weight: 500; }
+.summary-row-count { font-family: 'DM Mono', monospace; font-size: 12px; }
+
+.summary-actions { display: flex; gap: 10px; padding: 0 20px 20px; }
+.btn-primary {
+  flex: 1; padding: 12px;
+  background: var(--navy);
+  color: white; border: none;
+  border-radius: 8px;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--navy-light); }
+.btn-secondary {
+  flex: 1; padding: 12px;
+  background: white;
+  color: var(--navy);
+  border: 1.5px solid var(--gray-300);
+  border-radius: 8px;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { border-color: var(--navy); }
+
+/* ── FLOATING SUMMARY BUTTON ── */
+.fab {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--navy);
+  color: white;
+  border: none; border-radius: 50px;
+  padding: 14px 22px;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(15,39,68,0.3);
+  font-family: 'DM Sans', sans-serif;
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s;
+  z-index: 90;
+}
+.fab:hover { background: var(--blue); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(15,39,68,0.35); }
+.fab-dot {
+  width: 8px; height: 8px;
+  background: var(--blue-bright);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+/* ── PAGE VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .section-nav { display: none; }
+  .fab { bottom: 16px; right: 16px; padding: 12px 18px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- MODAL OVERLAY -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Information</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="header-logo">🫀</div>
+      <div class="header-title">
+        <h1>CIED Präoperative Checkliste</h1>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">↺ Neu</button>
+    </div>
+    <div class="progress-label">
+      <span>Fortschritt</span>
+      <strong id="progressText">0 von 0 Punkten</strong>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Section navigation pills -->
+  <div class="section-nav" id="sectionNav"></div>
+
+  <!-- Checklist view -->
+  <div class="view active" id="checklistView">
+    <div id="sectionsContainer"></div>
+  </div>
+
+  <!-- Summary view -->
+  <div class="view" id="summaryView">
+    <div class="summary-card" id="summaryCard"></div>
+  </div>
+
+</main>
+
+<!-- FAB -->
+<button class="fab" id="summaryFab" onclick="showSummary()">
+  <div class="fab-dot"></div>
+  Auswertung
+</button>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+const INFO = {
+  leitlinien: {
+    title: "Leitlinien-Grundlage",
+    body: `<h4>Relevante ESC-Leitlinien</h4>
+<ul>
+  <li><strong>2021 ESC Guidelines on cardiac pacing and cardiac resynchronization therapy</strong> – Indikationen für Schrittmacher, ICD und CRT</li>
+  <li><strong>2022 ESC Guidelines – ventricular arrhythmias & sudden cardiac death</strong> – ICD-Indikationen primär/sekundärprophylaktisch</li>
+  <li><strong>2021/2023 ESC Guidelines – heart failure</strong> – CRT-Indikation bei Herzinsuffizienz</li>
+  <li><strong>2023 ESC Guidelines – endocarditis</strong> – Management infizierter CIEDs</li>
+  <li><strong>2017 HRS Expert Consensus – Lead Management and Extraction</strong></li>
+  <li><strong>2025 EHRA Consensus – Upgrades and Downgrades</strong></li>
+</ul>
+<div class="ref-box">Vor jedem Eingriff muss geprüft werden, ob die Indikation den aktuellen Leitlinien entspricht. Unnötige Implantationen sind zu vermeiden.</div>`
+  },
+  indikation: {
+    title: "Indikationsprüfung",
+    body: `<h4>Warum eine erneute Prüfung?</h4>
+<p>Auch bei bereits geplanten Eingriffen muss unmittelbar präoperativ eine erneute Indikationsprüfung erfolgen – klinische Situation, Rhythmusstatus und Patientenwunsch können sich geändert haben.</p>
+<h4>Zu prüfende Punkte</h4>
+<ul>
+  <li>Entspricht die Indikation noch der aktuellen Leitlinie?</li>
+  <li>Wie ist die aktuelle Rhythmussituation (Holter, Telemetrie)?</li>
+  <li>LVEF aktuell bekannt (nicht älter als 4 Wochen)?</li>
+  <li>Hat der Patient Fragen oder Bedenken?</li>
+</ul>
+<div class="highlight-box">⚠ Unnötige CIED-Eingriffe sind mit Komplikationsrisiken verbunden (Infektion, Blutung, Sondendislokation) und müssen vermieden werden.</div>`
+  },
+  aufklaerung: {
+    title: "Patientenaufklärung",
+    body: `<h4>Rechtliche Grundlage</h4>
+<p>Ein CIED-Eingriff ohne ordnungsgemäße Aufklärung und dokumentierte Einwilligung ist rechtlich nicht zulässig. Der unterschriebene Aufklärungsbogen muss im klinikeigenen EDV-System eingescannt sein.</p>
+<h4>Aufzuklärende Risiken</h4>
+<ul>
+  <li>Infektion (Aggregattasche, Sonden, Endokarditis)</li>
+  <li>Blutung, Aggregattaschenhämatom</li>
+  <li>Pneumothorax / Hämatothorax</li>
+  <li>Sondendislokation mit Funktionsverlust</li>
+  <li>Trikuspidalklappeninsuffizienz (sondenbedingt)</li>
+  <li>Arrhythmien perioperativ</li>
+  <li>Myokard- oder Gefäßverletzung (ggf. Sternotomie)</li>
+  <li>Sondenperforation, Perikardtamponade</li>
+  <li>Tod</li>
+</ul>`
+  },
+  implantatausweis: {
+    title: "Implantatausweis",
+    body: `<h4>Warum ist der Implantatausweis wichtig?</h4>
+<p>Der Implantatausweis enthält essenzielle Informationen für Planung und Notfallmanagement:</p>
+<ul>
+  <li>Device-Typ und Hersteller</li>
+  <li>Modell- und Seriennummer von Aggregat und Sonden</li>
+  <li>Implantationsdatum</li>
+  <li>Anzahl und Typ der Sonden</li>
+</ul>
+<p>Diese Daten sind notwendig für die Programmierung, die Extraktionsplanung und zur schnellen Identifikation des Geräts im Notfall (z.B. MRT-Kompatibilität).</p>
+<div class="highlight-box">⚠ Ohne eingescannten Implantatausweis sollte kein elektiver Eingriff beginnen.</div>`
+  },
+  dialyse: {
+    title: "Dialysepflicht & Shuntarm",
+    body: `<h4>Warum ist der Shuntarm relevant?</h4>
+<p>Bei dialysepflichtigen Patienten ist der arteriovenöse Shunt (AV-Fistel) lebenswichtig. Eine Punktion der ipsilateralen Vena subclavia oder axillaris für die Sondenlage kann durch venöse Okklusion oder Thrombose den Shunt gefährden.</p>
+<h4>Konsequenz</h4>
+<ul>
+  <li>Sondenimplantation immer kontralateral zum Shuntarm planen</li>
+  <li>Bei unklarer Seite: präoperative Rücksprache mit Nephrologie</li>
+  <li>Alternativzugänge (z.B. femoraler Zugang) erwägen</li>
+</ul>`
+  },
+  infektionsfreiheit: {
+    title: "Infektionsfreiheit als Voraussetzung",
+    body: `<h4>Hintergrund</h4>
+<p>CIED-Infektionen gehören zu den schwerwiegendsten Komplikationen in der Device-Therapie. Fremdmaterial (Aggregat + Sonden) kann bei vorbestehender Bakteriämie kontaminiert werden.</p>
+<h4>Konsequenz einer CIED-Infektion</h4>
+<ul>
+  <li>Meist vollständige Systemexplantation erforderlich</li>
+  <li>Erhöhte Morbidität und Mortalität</li>
+  <li>Verlängerte Krankenhausaufenthalte</li>
+  <li>Hohe Kosten und Belastung für den Patienten</li>
+</ul>
+<h4>Regel</h4>
+<p><strong>Keine Körpertemperatur ≥ 38°C in den letzten 24 Stunden.</strong> Bei Fieber → Eingriff verschieben, Fokussuche und -behandlung.</p>
+<div class="highlight-box">Ausnahme: Notfallimplantation bei vitaler Indikation (z.B. AV-Block III° mit Bradykardie).</div>
+<div class="ref-box">Quelle: EHRA International Consensus Document on CIED Infections, Eur Heart J 2020</div>`
+  },
+  kollateralen: {
+    title: "Venöse Kollateralen an der Brustwand",
+    body: `<h4>Klinische Bedeutung</h4>
+<p>Sichtbare Venenkollateralkreisläufe an der Brustwand sind ein wichtiges klinisches Zeichen für einen venösen Verschluss intrathorakaler Venen (V. subclavia, V. brachiocephalica, V. cava superior).</p>
+<h4>Ursachen</h4>
+<ul>
+  <li>Häufig nach mehrfachen Voroperationen / Sondenlage</li>
+  <li>Chronische Venenthrombose durch Sonden</li>
+  <li>Kann asymptomatisch sein</li>
+</ul>
+<h4>Konsequenz</h4>
+<p>Vor geplantem Systemupgrade oder neuer Sonde: venöse Bildgebung (Venographie oder CT-Phlebographie) zum Ausschluss einer Okklusion.</p>`
+  },
+  deviceAbfrage: {
+    title: "Device-Abfrage (Interrogation)",
+    body: `<h4>Zweck</h4>
+<p>Die präoperative Device-Abfrage liefert aktuelle Geräteparameter und ist Voraussetzung für eine sichere perioperative Geräteführung.</p>
+<h4>Zu prüfende Parameter</h4>
+<ul>
+  <li><strong>Batteriestatus:</strong> Wann ist Aggregatwechsel indiziert (ERI, EOS)?</li>
+  <li><strong>Sensing:</strong> Erkennt das Gerät intrinsische Aktionen korrekt?</li>
+  <li><strong>Reizschwelle:</strong> Ausreichende Sicherheitsmarge vorhanden?</li>
+  <li><strong>Impedanz:</strong> Hinweise auf Sondenbruch oder Isolation?</li>
+  <li><strong>SM-Abhängigkeit:</strong> Stimulationsanteil > 40% = abhängig!</li>
+  <li><strong>Tachytherapien:</strong> Therapien ausgelöst? Angemessen?</li>
+</ul>
+<div class="highlight-box">⚠ Bei SM-Abhängigkeit: perioperative Umprogrammierung auf asynchronen Modus (DOO/VOO) erforderlich, um Inhibition durch Elektrokauter zu vermeiden.</div>
+<div class="ref-box">Nicht älter als 4 Wochen. Ältere Abfragen müssen erneuert werden.</div>`
+  },
+  roentgen: {
+    title: "Thorax-Röntgen",
+    body: `<h4>Warum ist das Thoraxröntgen obligat?</h4>
+<p>Das Thoraxröntgen (idealerweise p.a. + seitlich) liefert unverzichtbare Informationen für jeden CIED-Eingriff:</p>
+<ul>
+  <li>Anzahl und Verlauf der implantierten Sonden</li>
+  <li>Position des Aggregats (Tasche)</li>
+  <li>Dislozierte, gebrochene oder stillgelegte Sonden</li>
+  <li>Pleuraerguss, pulmonale Infiltrate, Stauungszeichen</li>
+</ul>
+<h4>Bei komplexen Eingriffen</h4>
+<p>Zusätzlich CT-Thorax mit KM für detaillierte Darstellung der zentralvenösen Anatomie – besonders bei Verdacht auf Stenosen/Okklusionen (V. subclavia, V. brachiocephalica, VCS).</p>
+<div class="ref-box">Gültigkeit: nicht älter als 4 Wochen. Bei älterem Röntgenbild oder klinischer Änderung: neue Aufnahme anfertigen.</div>`
+  },
+  echo: {
+    title: "Echokardiographie",
+    body: `<h4>Ziele der präoperativen Echo</h4>
+<ul>
+  <li><strong>LVEF:</strong> Entscheidend für ICD- und CRT-Indikation (ICD: LVEF ≤35%; CRT: LVEF ≤35% + LBBB)</li>
+  <li><strong>Klappenfunktion:</strong> Besonders Trikuspidalklappe – transvenöse RV-Sonden können TI verstärken</li>
+  <li><strong>Intrakardiale Strukturen:</strong> Thromben, Vegetationen, Shunts</li>
+  <li><strong>RV-Funktion:</strong> Relevant für Prognose und perioperatives Risiko</li>
+</ul>
+<h4>TTE vs. TEE</h4>
+<p>TTE ist in der Regel ausreichend. TEE ist indiziert bei:</p>
+<ul>
+  <li>Verdacht auf Sondenvegetation / Endokarditis</li>
+  <li>Unzureichender TTE-Qualität</li>
+  <li>Persistierendem Fieber oder positiver Blutkultur</li>
+</ul>
+<div class="highlight-box">⚠ Bei geplanter transvenöser RV-Sonde mit relevanter Trikuspidalklappenerkrankung: Alternativen erwägen (CS-Sonde, epikardiale Sonde, Leadless-Device).</div>
+<div class="ref-box">Gültigkeit: nicht älter als 4 Wochen.</div>`
+  },
+  labor: {
+    title: "Präoperative Laborwerte",
+    body: `<h4>Obligate Laborparameter und ihre Bedeutung</h4>
+<ul>
+  <li><strong>Blutbild (Hb, Thrombozyten):</strong> Anämie präoperativ korrigieren; ausreichende Thrombozytenzahl für Hämostase erforderlich</li>
+  <li><strong>CRP / Leukozyten:</strong> Ausschluss einer aktiven Infektion – elektive CIED-Eingriffe nur bei infektfreien Patienten</li>
+  <li><strong>Elektrolyte (K⁺, Na⁺):</strong> Elektrolytstörungen erhöhen Arrhythmierisiko und verändern Reizschwellen</li>
+  <li><strong>Kreatinin / eGFR:</strong> Beeinflusst DOAK-Management und KM-Gabe bei Bildgebung</li>
+  <li><strong>INR / PTT:</strong> Blutungsrisiko; INR-Zielwert bei VKA-Patienten perioperativ beachten</li>
+</ul>
+<h4>Nur bei Sondenextraktion zusätzlich</h4>
+<ul>
+  <li>Kreuzblut</li>
+  <li>≥ 2 Erythrozytenkonzentrate bereitgestellt</li>
+</ul>`
+  },
+  antikoagulation: {
+    title: "Antikoagulationsmanagement",
+    body: `<h4>Grundprinzip</h4>
+<p>Das Aggregattaschenhämatom ist eine häufige Komplikation nach CIED-Eingriffen und signifikant mit späteren Device-Infektionen assoziiert. Das perioperative Management muss Blutungsrisiko und thromboembolisches Risiko individuell abwägen.</p>
+<h4>Vitamin-K-Antagonisten (VKA)</h4>
+<ul>
+  <li>Kontinuierliche Therapie wird bevorzugt (im unteren Drittel des therapeutischen Bereichs)</li>
+  <li>Heparin-Bridging <strong>vermeiden</strong> – signifikant erhöhtes Hämatom-Risiko!</li>
+</ul>
+<h4>Direkte orale Antikoagulanzien (DOAK)</h4>
+<ul>
+  <li>Letzte Einnahme 24–48 h präoperativ pausieren (je nach Substanz & Nierenfunktion)</li>
+  <li>Apixaban, Rivaroxaban, Edoxaban: 24 h; Dabigatran: 48 h (längere Pause bei eingeschränkter Nierenfunktion)</li>
+  <li>Kein Bridging erforderlich</li>
+</ul>
+<h4>Thrombozytenaggregationshemmer</h4>
+<ul>
+  <li>ASS-Monotherapie: perioperativ fortführen</li>
+  <li>Duale Thrombozytenhemmung (P2Y12-Inhibitor): individuell nach Stenttyp und -datum absetzen</li>
+  <li><strong>Interdisziplinäre Rücksprache mit Kardiologie zwingend!</strong></li>
+</ul>
+<div class="highlight-box">⚠ Heparin-Bridging bei CIED-Eingriffen kontraindiziert (außer bei mechanischen Herzklappen mit hohem thromboembolischen Risiko nach interdisziplinärer Absprache).</div>
+<div class="ref-box">Quelle: EHRA Expert Consensus Statement on Implantation Technique, Europace 2021</div>`
+  },
+  extraktion: {
+    title: "Sondenextraktion – Hintergrund",
+    body: `<h4>Komplexität und Risiko</h4>
+<p>Die transvenöse Sondenextraktion gehört zu den komplexesten Eingriffen der Device-Therapie. Mit zunehmender Implantationsdauer bilden sich fibrotische Adhäsionen zwischen Sonde, Venenwand und endokardialen Strukturen.</p>
+<h4>Schwerwiegende Komplikationen</h4>
+<ul>
+  <li>Verletzung der V. cava superior (VCS-Avulsion)</li>
+  <li>Verletzung des rechten Vorhofs oder Ventrikels</li>
+  <li>Perikardtamponade</li>
+  <li>Lebensbedrohliche Blutung</li>
+</ul>
+<h4>Präoperative Anforderungen</h4>
+<ul>
+  <li>Herzchirurgisches Backup muss verfügbar sein</li>
+  <li>≥ 2 Erythrozytenkonzentrate bereitgestellt</li>
+  <li>TEE zum Vegetationsausschluss</li>
+  <li>CT-Thorax bei komplexer Anatomie</li>
+</ul>
+<div class="highlight-box">⚠ Extraktionen erfolgen ausschließlich im OP-Saal mit herzchirurgischem Backup. Kein Katheter-/EP-Labor!</div>
+<div class="ref-box">Quelle: HRS Expert Consensus on CIED Lead Management and Extraction, Heart Rhythm 2017</div>`
+  },
+  vegetation: {
+    title: "Vegetationen und CIED-Infektion",
+    body: `<h4>Klinische Bedeutung</h4>
+<p>Sondenassoziierte Vegetationen sind Ausdruck einer Device-assoziierten Endokarditis. Die Diagnose hat weitreichende Konsequenzen für die Therapiestrategie.</p>
+<h4>Diagnostik</h4>
+<ul>
+  <li><strong>TEE:</strong> deutlich sensitiver als TTE für Sondenvegetationen (Sensitivität TEE ~90% vs. TTE ~30%)</li>
+  <li><strong>FDG-PET/CT:</strong> bei unklarem klinischen Befund oder negativer Echo trotz Infektionsverdacht</li>
+  <li><strong>Blutkulturen:</strong> mindestens 3 Paare aerob/anaerob vor Antibiose</li>
+</ul>
+<h4>Konsequenz großer Vegetationen</h4>
+<p>Bei Vegetationen > 2 cm: Aspiration mittels AngioVac-System oder chirurgische Therapie erwägen, um systemische Embolisierung während Extraktion zu minimieren.</p>
+<div class="ref-box">Quelle: ESC Guidelines on Endocarditis, Eur Heart J 2023</div>`
+  },
+  reimplantation: {
+    title: "Reimplantationsstrategie nach Explantation",
+    body: `<h4>Bei infektiöser Indikation</h4>
+<p>Nach vollständiger Systemexplantation bei CIED-Infektion wird in der Regel eine <strong>zeitlich verzögerte Reimplantation</strong> empfohlen:</p>
+<ul>
+  <li>Antibiose für mindestens 14 Tage (bei Endokarditis 6 Wochen)</li>
+  <li>Negativierung der Blutkulturen abwarten</li>
+  <li>CRP-Normalisierung anstreben</li>
+  <li>Reimplantation auf der Gegenseite wenn möglich</li>
+</ul>
+<h4>Bridging bei SM-Abhängigkeit</h4>
+<ul>
+  <li><strong>Option 1:</strong> Minimale epikardiale Schrittmacher-Implantation über subxiphoidalen Zugang</li>
+  <li><strong>Option 2:</strong> Semipermanente transvenöse Sonde mit externem Aggregat</li>
+</ul>`
+  }
+};
+
+const SECTIONS = [
+  {
+    id: "s1", num: 1,
+    title: "Indikationsprüfung",
+    subtitle: "Vor jedem Eingriff",
+    items: [
+      { id: "i1_1", label: "Indikation gemäß aktueller ESC-Leitlinie geprüft", note: "2021 Pacing · 2022 VA/SCD · 2021/2023 HF · 2023 Endocarditis · 2025 Upgrades", required: true, info: "leitlinien" },
+      { id: "i1_2", label: "Aktuelle Rhythmussituation bewertet", note: "EKG, Holter, Telemetrie", required: true, info: "indikation" },
+      { id: "i1_3", label: "Linksventrikuläre Funktion bewertet", note: "LVEF aktuell bekannt?", required: true, info: "indikation" },
+      { id: "i1_4", label: "Klinischer Zustand und Patientenwunsch berücksichtigt", required: true },
+      { id: "i1_5", label: "Finale Freigabe durch Operateur eingeholt", required: true },
+    ]
+  },
+  {
+    id: "s2", num: 2,
+    title: "Patientenaufklärung & Einwilligung",
+    subtitle: "Rechtliche Voraussetzung",
+    items: [
+      { id: "i2_1", label: "Aufklärungsgespräch geführt (standardisierter Aufklärungsbogen)", required: true, info: "aufklaerung" },
+      { id: "i2_2", label: "Unterschriebener Aufklärungsbogen im EDV-System eingescannt", required: true, info: "aufklaerung" },
+    ],
+    alerts: [
+      { type: "warning", text: "Aufzuklären über: Infektion, Blutung/Hämatom, Pneumo-/Hämatothorax, Sondendislokation, Trikuspidalklappeninsuffizienz, Arrhythmien, Myokard-/Gefäßverletzung, Sondenperforation/Perikardtamponade, Tod" }
+    ]
+  },
+  {
+    id: "s3", num: 3,
+    title: "Anamnese & Implantatdokumentation",
+    subtitle: "Nur bei bestehendem CIED",
+    conditional: true,
+    items: [
+      { id: "i3_1", label: "Implantatausweis eingescannt und im EDV hinterlegt", note: "Bei bestehendem Device", required: true, info: "implantatausweis" },
+      { id: "i3_2", label: "Device-Typ, Hersteller, Serien-Nr., Implantationsdatum dokumentiert", required: true, info: "implantatausweis" },
+      { id: "i3_3", label: "Anzahl und Typ der Sonden erfasst", required: true },
+      { id: "i3_4", label: "Vorherige Revisionen mit Datum dokumentiert", required: false },
+      { id: "i3_5", label: "Vorherige Infektionen erfasst", required: false },
+      { id: "i3_6", label: "Rhythmusstörungen / Synkopen / HI-Symptome erhoben", required: true },
+      { id: "i3_7", label: "Antikoagulation / Thrombozytenhemmer erfasst", required: true, info: "antikoagulation" },
+      { id: "i3_8", label: "Komorbiditäten: Diabetes mellitus, Niereninsuffizienz, Immunsuppression", required: true },
+      { id: "i3_9", label: "Bei Dialysepflicht: Seite des Shuntarmes dokumentiert", note: "Wichtig für Zugangsstrategie!", required: false, warning: true, info: "dialyse" },
+    ]
+  },
+  {
+    id: "s4", num: 4,
+    title: "Klinische Untersuchung & Infektionsfreiheit",
+    subtitle: "Zwingend vor jedem Eingriff",
+    items: [
+      { id: "i4_1", label: "Vollständige klinische Untersuchung inkl. Vitalparameter", required: true },
+      { id: "i4_2", label: "Inspektion der Implantationsregion: Rötung, Schwellung, Schmerz, Sekretion", required: true },
+      { id: "i4_3", label: "Venöse Kollateralkreisläufe an der Brustwand erkannt / dokumentiert", note: "Hinweis auf Venenverschluss", required: false, info: "kollateralen" },
+      { id: "i4_4", label: "Fotodokumentation bei auffälligem Befund", note: "Falls vorhanden", required: false },
+      { id: "i4_5", label: "Patient ≥ 24 h fieberfrei (Körpertemp. < 38 °C)", note: "ZWINGEND bei nicht-infektiöser Indikation", required: true, warning: true, info: "infektionsfreiheit" },
+    ],
+    alerts: [
+      { type: "danger", text: "⚠ Bei Fieber (≥ 38 °C): Eingriff verschieben! Infektfokussuche und -behandlung einleiten. Ausnahme: Notfallimplantation bei vitaler Indikation." }
+    ]
+  },
+  {
+    id: "s5", num: 5,
+    title: "Device-Abfrage",
+    subtitle: "Nur bei bestehendem CIED",
+    conditional: true,
+    items: [
+      { id: "i5_1", label: "Aktuelle Device-Abfrage vorhanden oder präoperativ durchgeführt", note: "Nicht älter als 4 Wochen", required: true, info: "deviceAbfrage" },
+      { id: "i5_2", label: "Batteriestatus geprüft", required: true, info: "deviceAbfrage" },
+      { id: "i5_3", label: "Sondenfunktion: Sensing, Reizschwelle, Impedanz", required: true, info: "deviceAbfrage" },
+      { id: "i5_4", label: "Schrittmacher-Abhängigkeit / Stimulationshäufigkeit beurteilt", required: true, info: "deviceAbfrage" },
+      { id: "i5_5", label: "Tachytherapien bei Rhythmusereignissen beurteilt", required: true, info: "deviceAbfrage" },
+      { id: "i5_6", label: "Befund in der elektronischen Patientenakte dokumentiert", required: true },
+    ]
+  },
+  {
+    id: "s6", num: 6,
+    title: "Präoperative Bildgebung",
+    subtitle: "Röntgen obligat · CT fakultativ",
+    items: [
+      { id: "i6_1", label: "Thorax-Röntgen vorhanden (idealerweise p.a. + seitlich)", note: "Nicht älter als 4 Wochen", required: true, info: "roentgen" },
+      { id: "i6_2", label: "Sondenanzahl, -lage und -verlauf beurteilt (inkl. stillgelegte Sonden)", required: true, info: "roentgen" },
+      { id: "i6_3", label: "Aggregatposition beurteilt", required: true },
+      { id: "i6_4", label: "Pleuraerguss, pulmonale Infiltrate, Stauungszeichen beurteilt", required: true },
+      { id: "i6_5", label: "CT-Thorax mit KM bei Verdacht auf venöse Obstruktion / komplexe Anatomie", note: "Fakultativ – besonders bei Revisionen", required: false, info: "roentgen" },
+      { id: "i6_6", label: "Venographie bei Verdacht auf venösen Verschluss (v.a. vor System-Upgrade)", note: "Fakultativ", required: false, info: "kollateralen" },
+      { id: "i6_7", label: "FDG-PET/CT oder nuklearmedizin. Bildgebung bei Infektionsverdacht", note: "Fakultativ", required: false, info: "vegetation" },
+    ]
+  },
+  {
+    id: "s7", num: 7,
+    title: "Echokardiographie",
+    subtitle: "TTE obligat · TEE bei Infektionsverdacht",
+    items: [
+      { id: "i7_1", label: "TTE vorhanden (LVEF, Klappenfunktion, intrakardiale Strukturen)", note: "Nicht älter als 4 Wochen", required: true, info: "echo" },
+      { id: "i7_2", label: "LVEF bestimmt und dokumentiert", note: "Entscheidend für ICD-/CRT-Indikation", required: true, info: "echo" },
+      { id: "i7_3", label: "Trikuspidalklappenfunktion beurteilt", note: "Kritisch bei geplanter transvenöser RV-Sonde", required: true, info: "echo" },
+      { id: "i7_4", label: "Intrakardiale Thromben / Vegetationen ausgeschlossen", required: true, info: "vegetation" },
+      { id: "i7_5", label: "TEE bei Infektionsverdacht oder unzureichender TTE-Qualität", note: "Hohe Sensitivität für Sondenvegetationen", required: false, warning: true, info: "vegetation" },
+    ]
+  },
+  {
+    id: "s8", num: 8,
+    title: "Laboruntersuchungen",
+    subtitle: "Alle präoperativ aktuell",
+    items: [
+      { id: "i8_1", label: "Blutbild (Hb, Thrombozyten, Leukozyten)", required: true, info: "labor" },
+      { id: "i8_2", label: "CRP (Entzündungsparameter)", required: true, info: "labor" },
+      { id: "i8_3", label: "Elektrolyte: Kalium, Natrium", required: true, info: "labor" },
+      { id: "i8_4", label: "Kreatinin / eGFR (Nierenfunktion)", required: true, info: "labor" },
+      { id: "i8_5", label: "Gerinnungsparameter: INR, PTT", required: true, info: "labor" },
+      { id: "i8_6", label: "Kreuzblut + ≥ 2 Erythrozytenkonzentrate bereitgestellt", note: "NUR bei Sondenextraktion – PFLICHT", required: false, warning: true, info: "extraktion" },
+    ],
+    alerts: [
+      { type: "warning", text: "Erhöhtes CRP / Leukozytose → Infektfokus abklären vor elektiven Eingriffen. Elektrolytstörungen und Anämie präoperativ korrigieren." }
+    ]
+  },
+  {
+    id: "s9", num: 9,
+    title: "Antikoagulationsmanagement",
+    subtitle: "Individuelles Blutungs-/Thromboserisiko abwägen",
+    items: [
+      { id: "i9_1", label: "VKA: INR im unteren Drittel des therapeutischen Bereichs angestrebt", note: "Kontinuierliche Therapie bevorzugen", required: true, info: "antikoagulation" },
+      { id: "i9_2", label: "Kein Heparin-Bridging (außer bei mechanischen Herzklappen nach Rücksprache)", note: "Signifikant erhöhtes Hämatom-Risiko!", required: true, warning: true, info: "antikoagulation" },
+      { id: "i9_3", label: "DOAK: Letzte Einnahme 24–48 h präoperativ pausiert", note: "Je nach Substanz und Nierenfunktion", required: true, info: "antikoagulation" },
+      { id: "i9_4", label: "ASS-Monotherapie: kann perioperativ fortgeführt werden", required: false, info: "antikoagulation" },
+      { id: "i9_5", label: "Duale Thrombozytenhemmung: P2Y12-Inhibitor pausiert nach interdiszipl. Absprache", note: "Rücksprache Kardiologie zwingend!", required: false, warning: true, info: "antikoagulation" },
+      { id: "i9_6", label: "INR-Wert aktuell dokumentiert", required: true },
+    ]
+  },
+  {
+    id: "s10", num: 10,
+    title: "Zusatzplanung: Sondenextraktion",
+    subtitle: "Nur bei geplanter Sondenextraktion",
+    conditional: true,
+    items: [
+      { id: "i10_1", label: "Implantationsdatum jeder Sonde dokumentiert", note: "Länge der Implantation bestimmt Fibrose und Extraktionsrisiko", required: true, info: "extraktion" },
+      { id: "i10_2", label: "Anzahl der Sonden (inkl. stillgelegte) erfasst", required: true, info: "extraktion" },
+      { id: "i10_3", label: "Frühere Revisionen / Manipulationen an Sonden erfasst", required: true },
+      { id: "i10_4", label: "TEE zum Ausschluss / Nachweis von Vegetationen durchgeführt", note: "Besonders bei Infektionsindikation", required: true, info: "vegetation" },
+      { id: "i10_5", label: "CT-Thorax mit KM zur Venendarstellung bei komplexer Anatomie", note: "Empfohlen", required: false, info: "roentgen" },
+      { id: "i10_6", label: "≥ 2 Erythrozytenkonzentrate bereitgestellt und unmittelbar verfügbar", required: true, warning: true, info: "extraktion" },
+      { id: "i10_7", label: "Reimplantationsstrategie festgelegt", note: "Bei Infektionsindikation: verzögerte Reimplantation", required: true, info: "reimplantation" },
+      { id: "i10_8", label: "Bridging-Schrittmacher-Strategie geplant (bei SM-Abhängigkeit)", note: "Epikardialer oder semiperm. transvenöser Schrittmacher", required: false, info: "reimplantation" },
+    ],
+    alerts: [
+      { type: "danger", text: "⚠ Schwere Komplikationen möglich: VCS-, RA-, RV-Verletzung → Sofortverfügbarkeit von Blutprodukten und herzchirurgisches Backup sicherstellen!" }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+const state = {};
+SECTIONS.forEach(s => s.items.forEach(i => state[i.id] = false));
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function render() {
+  renderNav();
+  renderSections();
+  updateProgress();
+}
+
+function renderNav() {
+  const nav = document.getElementById('sectionNav');
+  nav.innerHTML = SECTIONS.map(s => {
+    const total = s.items.length;
+    const done = s.items.filter(i => state[i.id]).length;
+    const isDone = done === total;
+    return `<button class="nav-pill ${isDone ? 'done' : ''}" onclick="scrollToSection('${s.id}')">${s.num}. ${s.title.split(' ')[0]}</button>`;
+  }).join('');
+}
+
+function renderSections() {
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = SECTIONS.map(s => renderSection(s)).join('');
+}
+
+function renderSection(s) {
+  const total = s.items.length;
+  const done = s.items.filter(i => state[i.id]).length;
+  const complete = done === total;
+  const isOpen = true; // all open by default
+
+  const items = s.items.map(i => renderItem(i)).join('');
+  const alerts = (s.alerts || []).map(a => `
+    <div class="alert-row ${a.type}">
+      <span class="alert-icon">${a.type === 'danger' ? '🔴' : '⚠️'}</span>
+      <span class="alert-text">${a.text}</span>
+    </div>`).join('');
+
+  return `
+  <div class="section-card ${complete ? 'complete' : ''} open" id="${s.id}">
+    <div class="section-header" onclick="toggleSection('${s.id}')">
+      <div class="section-num">${complete ? '✓' : s.num}</div>
+      <div class="section-title-wrap">
+        <div class="section-title">${s.title}${s.conditional ? `<span class="conditional-badge">Wenn vorhanden</span>` : ''}</div>
+        <div class="section-subtitle">${s.subtitle}</div>
+      </div>
+      <div class="section-status">
+        <span class="section-count ${complete ? 'done' : ''}">${done}/${total}</span>
+        <span class="chevron">⌄</span>
+      </div>
+    </div>
+    <div class="section-body">
+      ${items}
+      ${alerts}
+    </div>
+  </div>`;
+}
+
+function renderItem(item) {
+  const checked = state[item.id];
+  const cls = [
+    checked ? 'checked' : '',
+    item.warning ? 'warning' : '',
+    item.critical ? 'critical' : ''
+  ].filter(Boolean).join(' ');
+
+  const infoBtn = item.info ? `<button class="info-btn" onclick="showInfo(event,'${item.info}')" title="Hintergrundinfo">i</button>` : '';
+
+  return `
+  <div class="check-item ${cls}" onclick="toggleItem('${item.id}')">
+    <div class="checkbox"><span class="checkbox-check">✓</span></div>
+    <div class="check-content">
+      <div class="check-label">
+        ${item.required ? '<span class="required-star">★</span>' : ''}
+        ${item.label}
+      </div>
+      ${item.note ? `<div class="check-note">${item.note}</div>` : ''}
+    </div>
+    ${infoBtn}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// INTERACTION
+// ═══════════════════════════════════════════════════════
+function toggleItem(id) {
+  state[id] = !state[id];
+  refreshAll();
+}
+
+function toggleSection(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Open if closed
+  document.getElementById(id)?.classList.add('open');
+}
+
+function refreshAll() {
+  // Update items in DOM without full re-render
+  SECTIONS.forEach(s => {
+    const card = document.getElementById(s.id);
+    if (!card) return;
+    s.items.forEach(i => {
+      const el = card.querySelector(`[onclick="toggleItem('${i.id}')"]`);
+      if (!el) return;
+      if (state[i.id]) { el.classList.add('checked'); }
+      else { el.classList.remove('checked'); }
+    });
+    const done = s.items.filter(i => state[i.id]).length;
+    const total = s.items.length;
+    const complete = done === total;
+    card.querySelector('.section-count').textContent = `${done}/${total}`;
+    card.querySelector('.section-count').className = `section-count ${complete ? 'done' : ''}`;
+    card.querySelector('.section-num').textContent = complete ? '✓' : s.num;
+    if (complete) card.classList.add('complete'); else card.classList.remove('complete');
+  });
+  updateProgress();
+  renderNav();
+}
+
+function updateProgress() {
+  const total = Object.keys(state).length;
+  const done = Object.values(state).filter(Boolean).length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${done} von ${total} Punkten`;
+}
+
+function doReset() {
+  Object.keys(state).forEach(k => state[k] = false);
+  document.getElementById('checklistView').classList.add('active');
+  document.getElementById('summaryView').classList.remove('active');
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetAll() {
+  if (!confirm('Checkliste zurücksetzen?')) return;
+  doReset();
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════
+function showInfo(event, key) {
+  event.stopPropagation();
+  const info = INFO[key];
+  if (!info) return;
+  document.getElementById('modalTitle').textContent = info.title;
+  document.getElementById('modalBody').innerHTML = info.body;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(event) {
+  if (event.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// ═══════════════════════════════════════════════════════
+// SUMMARY
+// ═══════════════════════════════════════════════════════
+function showSummary() {
+  const summaryView = document.getElementById('summaryView');
+  const checklistView = document.getElementById('checklistView');
+
+  const rows = SECTIONS.map(s => {
+    const total = s.items.length;
+    const done = s.items.filter(i => state[i.id]).length;
+    const required = s.items.filter(i => i.required);
+    const requiredDone = required.filter(i => state[i.id]).length;
+    const allRequired = requiredDone === required.length;
+    const allDone = done === total;
+    const cls = allDone ? 'ok' : allRequired ? 'warn' : 'incomplete';
+    const icon = allDone ? '✅' : allRequired ? '⚠️' : '❌';
+    return `<div class="summary-row ${cls}">
+      <span class="summary-row-icon">${icon}</span>
+      <span class="summary-row-text">${s.num}. ${s.title}</span>
+      <span class="summary-row-count">${done}/${total}</span>
+    </div>`;
+  }).join('');
+
+  const total = Object.keys(state).length;
+  const done = Object.values(state).filter(Boolean).length;
+  const pct = Math.round(done / total * 100);
+
+  const requiredItems = SECTIONS.flatMap(s => s.items.filter(i => i.required));
+  const requiredDone = requiredItems.filter(i => state[i.id]).length;
+  const allRequired = requiredDone === requiredItems.length;
+
+  const statusText = allRequired && done === total
+    ? '✅ Alle Maßnahmen abgeschlossen'
+    : allRequired
+    ? '⚠️ Pflichtmaßnahmen erfüllt – optionale Punkte offen'
+    : `❌ ${requiredItems.length - requiredDone} Pflichtmaßnahme(n) fehlen noch`;
+
+  document.getElementById('summaryCard').innerHTML = `
+    <div class="summary-header">
+      <h2>${statusText}</h2>
+      <p>${done} von ${total} Punkten erledigt (${pct}%)</p>
+    </div>
+    <div class="summary-body">${rows}</div>
+    <div class="summary-actions">
+      <button class="btn-secondary" onclick="backToChecklist()">← Zurück</button>
+      <button class="btn-primary" onclick="doReset()">↺ Neue Checkliste</button>
+    </div>`;
+
+  checklistView.classList.remove('active');
+  summaryView.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function backToChecklist() {
+  document.getElementById('summaryView').classList.remove('active');
+  document.getElementById('checklistView').classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
